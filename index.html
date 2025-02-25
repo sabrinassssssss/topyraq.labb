@@ -1,178 +1,3 @@
-# topyraq.labb
-site that will help you to care about
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мониторинг растений</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f4f4f4; font-family: Arial, sans-serif; }
-        .navbar { background: #2c6e49; }
-        .navbar-brand, .nav-link { color: white !important; }
-        .section { padding: 50px 20px; text-align: center; }
-        video { width: 100%; max-width: 400px; border-radius: 10px; }
-        .calendar-table { width: 80%; margin: auto; background: white; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 10px; text-align: center; }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Plant Monitor</a>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#camera">Камера</a></li>
-                <li class="nav-item"><a class="nav-link" href="#analysis">Анализ</a></li>
-                <li class="nav-item"><a class="nav-link" href="#calendar">Календарь</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section id="camera" class="section">
-        <h2>Камера</h2>
-        <video id="camera-feed" autoplay></video>
-        <button class="btn btn-success mt-3" onclick="captureImage()">Сделать фото</button>
-        <canvas id="snapshot" style="display:none;"></canvas>
-    </section>
-
-    <section id="analysis" class="section">
-        <h2>Рекомендации</h2>
-        <p id="advice">Здесь появятся советы...</p>
-    </section>
-
-    <section id="calendar" class="section">
-        <h2>Календарь полива</h2>
-        <button class="btn btn-primary mb-3" onclick="addWateringRecord()">Добавить запись</button>
-        <table class="calendar-table">
-            <tr>
-                <th>Дата</th>
-                <th>Время</th>
-            </tr>
-            <tbody id="calendar-body"></tbody>
-        </table>
-    </section>
-
-    <script>
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-            document.getElementById('camera-feed').srcObject = stream;
-        }).catch(error => {
-            alert('Ошибка доступа к камере! Проверьте настройки браузера.');
-        });
-
-        function captureImage() {
-            let video = document.getElementById('camera-feed');
-            let canvas = document.getElementById('snapshot');
-            let context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            alert("Фото сделано!");
-        }
-
-        function addWateringRecord() {
-            let table = document.getElementById("calendar-body");
-            let row = table.insertRow();
-            let dateCell = row.insertCell(0);
-            let timeCell = row.insertCell(1);
-            let now = new Date();
-            dateCell.innerText = now.toLocaleDateString();
-            timeCell.innerText = now.toLocaleTimeString();
-        }
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мониторинг растений</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f4f4f4; font-family: Arial, sans-serif; }
-        .navbar { background: #2c6e49; }
-        .navbar-brand, .nav-link { color: white !important; }
-        .hero { background: url('https://source.unsplash.com/1600x900/?plant') no-repeat center/cover; padding: 100px 0; text-align: center; color: white; }
-        .hero h1 { font-size: 3rem; font-weight: bold; }
-        .section { padding: 50px 20px; text-align: center; }
-        video { width: 100%; max-width: 400px; border-radius: 10px; }
-        .calendar-table { width: 80%; margin: auto; background: white; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 10px; text-align: center; }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Plant Monitor</a>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#camera">Камера</a></li>
-                <li class="nav-item"><a class="nav-link" href="#analysis">Анализ</a></li>
-                <li class="nav-item"><a class="nav-link" href="#calendar">Календарь</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="container">
-            <h1>Анализируй здоровье растений</h1>
-            <p>Используйте камеру и датчики, чтобы следить за их состоянием</p>
-        </div>
-    </section>
-
-    <section id="camera" class="section">
-        <h2>Камера</h2>
-        <video id="camera-feed" autoplay></video>
-        <button class="btn btn-success mt-3" onclick="captureImage()">Сделать фото</button>
-        <canvas id="snapshot" style="display:none;"></canvas>
-    </section>
-
-    <section id="analysis" class="section">
-        <h2>Рекомендации</h2>
-        <p id="advice">Здесь появятся советы...</p>
-    </section>
-
-    <section id="calendar" class="section">
-        <h2>Календарь полива</h2>
-        <button class="btn btn-primary mb-3" onclick="addWateringRecord()">Добавить запись</button>
-        <table class="calendar-table">
-            <tr>
-                <th>Дата</th>
-                <th>Время</th>
-            </tr>
-            <tbody id="calendar-body"></tbody>
-        </table>
-    </section>
-
-    <script>
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-            document.getElementById('camera-feed').srcObject = stream;
-        }).catch(error => {
-            alert('Ошибка доступа к камере! Проверьте настройки браузера.');
-        });
-
-        function captureImage() {
-            let video = document.getElementById('camera-feed');
-            let canvas = document.getElementById('snapshot');
-            let context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            alert("Фото сделано!");
-        }
-
-        function addWateringRecord() {
-            let table = document.getElementById("calendar-body");
-            let row = table.insertRow();
-            let dateCell = row.insertCell(0);
-            let timeCell = row.insertCell(1);
-            let now = new Date();
-            dateCell.innerText = now.toLocaleDateString();
-            timeCell.innerText = now.toLocaleTimeString();
-        }
-    </script>
-</body>
-</html>
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -183,6 +8,7 @@ export default function SmartGardenApp() {
   const [cameraAngle, setCameraAngle] = useState(0);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [reminders, setReminders] = useState<{ [key: string]: string }>({});
+  const [isFrontCamera, setIsFrontCamera] = useState(false);
 
   const handleRotate = (direction: "left" | "right") => {
     setCameraAngle((prev) => prev + (direction === "left" ? -15 : 15));
@@ -199,19 +25,25 @@ export default function SmartGardenApp() {
     }
   };
 
+  const toggleCamera = () => {
+    setIsFrontCamera((prev) => !prev);
+  };
+
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Умный сад</h1>
+      <h1 className="text-3xl font-bold text-center">TopyraqLab</h1>
+      <h2 className="text-2xl font-bold">Умный сад</h2>
       
       {/* Камера */}
       <Card>
         <CardContent className="flex flex-col items-center p-4">
           <motion.div animate={{ rotate: cameraAngle }} className="w-40 h-40 bg-gray-200 flex items-center justify-center">
-            📷 Камера
+            {isFrontCamera ? "🤳 Фронтальная камера" : "📷 Задняя камера"}
           </motion.div>
           <div className="mt-2 space-x-2">
             <Button onClick={() => handleRotate("left")}>⬅️</Button>
             <Button onClick={() => handleRotate("right")}>➡️</Button>
+            <Button onClick={toggleCamera} className="ml-2">🔄 Переключить камеру</Button>
           </div>
         </CardContent>
       </Card>
