@@ -21,7 +21,7 @@ export default function SmartGardenApp() {
   const handleAddReminder = () => {
     if (selectedDate) {
       const dateKey = selectedDate.toISOString().split("T")[0];
-      setReminders({ ...reminders, [dateKey]: "Полив растений" });
+      setReminders((prev) => ({ ...prev, [dateKey]: "Полив растений" }));
     }
   };
 
@@ -30,29 +30,37 @@ export default function SmartGardenApp() {
   };
 
   return (
-    <div className="p-6 space-y-6 bg-green-50 text-green-900">
+    <div className="min-h-screen p-6 space-y-6 bg-green-50 text-green-900">
       <h1 className="text-4xl font-bold text-center text-green-700">TopyraqLab</h1>
       <h2 className="text-2xl font-bold text-center">Умный сад</h2>
-      
+
       {/* Камера */}
       <Card className="bg-white shadow-lg rounded-2xl">
         <CardContent className="flex flex-col items-center p-4">
-          <motion.div animate={{ rotate: cameraAngle }} className="w-40 h-40 bg-green-100 flex items-center justify-center rounded-lg">
+          <motion.div 
+            animate={{ rotate: cameraAngle }} 
+            className="w-40 h-40 bg-green-100 flex items-center justify-center rounded-lg shadow-md"
+          >
             {isFrontCamera ? "🌿 Фронтальная камера" : "📷 Задняя камера"}
           </motion.div>
-          <div className="mt-2 space-x-2">
+          <div className="mt-4 flex gap-2">
             <Button onClick={() => handleRotate("left")} className="bg-green-500 hover:bg-green-600">⬅️</Button>
             <Button onClick={() => handleRotate("right")} className="bg-green-500 hover:bg-green-600">➡️</Button>
-            <Button onClick={toggleCamera} className="ml-2 bg-green-500 hover:bg-green-600">🔄 Переключить камеру</Button>
+            <Button onClick={toggleCamera} className="bg-green-500 hover:bg-green-600">🔄 Сменить камеру</Button>
           </div>
         </CardContent>
       </Card>
-      
+
       {/* Календарь */}
       <Card className="bg-white shadow-lg rounded-2xl">
         <CardContent className="p-4">
           <Calendar mode="single" selected={selectedDate} onSelect={handleDateSelect} />
-          <Button onClick={handleAddReminder} className="mt-2 w-full bg-green-500 hover:bg-green-600">Добавить напоминание</Button>
+          <Button 
+            onClick={handleAddReminder} 
+            className="mt-4 w-full bg-green-500 hover:bg-green-600"
+          >
+            Добавить напоминание
+          </Button>
         </CardContent>
       </Card>
 
@@ -60,11 +68,12 @@ export default function SmartGardenApp() {
       <Card className="bg-white shadow-lg rounded-2xl">
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold text-green-700">Рекомендации</h2>
-          {selectedDate ? (
-            <p className="mt-2 text-green-800">{reminders[selectedDate.toISOString().split("T")[0]] || "Нет запланированных действий."}</p>
-          ) : (
-            <p className="mt-2 text-green-800">Выберите дату, чтобы увидеть рекомендации.</p>
-          )}
+          <p className="mt-2 text-green-800">
+            {selectedDate 
+              ? reminders[selectedDate.toISOString().split("T")[0]] || "Нет запланированных действий."
+              : "Выберите дату, чтобы увидеть рекомендации."
+            }
+          </p>
         </CardContent>
       </Card>
     </div>
